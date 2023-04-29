@@ -72,24 +72,7 @@
             return;
         }
 
-        var responseHTTP = await repository.Delete($"api/countries/{country.Id}");
-
-        if (responseHTTP.Error)
-        {
-            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                navigationManager.NavigateTo("/");
-            }
-            else
-            {
-                var mensajeError = await responseHTTP.GetErrorMessageAsync();
-                await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
-            }
-        }
-        else
-        {
-            await Load();
-        }
+        context.PreventNavigation();
 
     }
 

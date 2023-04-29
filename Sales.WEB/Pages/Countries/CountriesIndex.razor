@@ -5,6 +5,7 @@
 
 
 <h3>Paises</h3>
+<link rel="icon" href="https://www.iconarchive.com/download/i88489/icons8/ios7/Maps-Globe.ico" type="image/icon type">
 
 <a class="btn btn-primary mb-3" href="/countries/create">Nuevo País</a>
 
@@ -43,11 +44,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var responseHttp = await repository.Get<List<Country>>("/api/countries");
-        Countries = responseHttp.Response;
+        await Load();
     }
 
-    private async Task Delete(Country country)
+    private async Task Load()
+    {
+        var responseHppt = await repository.Get<List<Country>>("api/countries");
+        Countries = responseHppt.Response!;
+    }
+
+
+
+    private async Task Delete(int id)
     {
         var result = await sweetAlertService.FireAsync(new SweetAlertOptions
             {
@@ -59,13 +67,26 @@
                 ConfirmButtonText = "Si"
             });
 
-        var confirm = !string.IsNullOrEmpty(result.Value);
+        var confirm = string.IsNullOrEmpty(result.Value);
 
         if (confirm)
         {
             return;
         }
 
-    }
+        var responseHTTP = await repository.Delete($"api/countries/{id}");
 
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
+            {
+
+                var messageError = await responseHTTP.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", messageError, SweetAlertIcon.Error);
+                return;
+            }
+        }
+
+        await Load();
+    }
 }

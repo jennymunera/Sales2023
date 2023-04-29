@@ -54,10 +54,9 @@ else
             await sweetAlertService.FireAsync("Error", messageError, SweetAlertIcon.Error);
             return;
         }
-        
-            countryForm!.FormPostedSuccessfully = true;
-            navigationManager.NavigateTo("/countries");
-        
+
+        Return();
+
     }
 
     private void Return()
