@@ -17,6 +17,8 @@ namespace Sales.Shared.Entities
         [MaxLength(100, ErrorMessage = "El campo {0}  no debe tener más de  {1} caractéres")]
         public string Name { get; set; } = null!;
 
+        public int StatedId { get; set; }
+
         public State? State { get; set; }
     }
 }

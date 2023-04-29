@@ -13,6 +13,7 @@ namespace Sales.Shared.Entities
 
         public ICollection<State>? States { get; set;}
 
+        [Display(Name = "Estados/Departamentos")]
         public int StatesNumber => States == null ? 0 : States.Count;  
     }
 }
