@@ -59,20 +59,38 @@
             {
                 Title = "Confirmación",
                 Text = "¿Deseas abandonar la página y perder los cambios?",
-                Icon = SweetAlertIcon.Warning,
+                Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true,
                 CancelButtonText="No",
                 ConfirmButtonText="Si"
             });
 
-        var confirm = !string.IsNullOrEmpty(result.Value);
+        var confirm = string.IsNullOrEmpty(result.Value);
 
         if (confirm)
         {
             return;
         }
 
-        context.PreventNavigation();
+        var responseHTTP = await repository.Delete($"api/countries/{country.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
+
     }
 
 }
