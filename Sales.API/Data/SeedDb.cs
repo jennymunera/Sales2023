@@ -15,6 +15,31 @@ namespace Sales.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
+            await CheckCategoriesAsync();
+        }
+
+        private async Task CheckCategoriesAsync()
+        {
+            if (!_context.Categories.Any())
+            {
+                _context.Categories.Add(new Category { Name = "Accesorios para Dispositivos" });
+                _context.Categories.Add(new Category { Name = "Belleza" });
+                _context.Categories.Add(new Category { Name = "Libros " });
+                _context.Categories.Add(new Category { Name = "Camaras y Fotografia" });
+                _context.Categories.Add(new Category { Name = "Electronicos" });
+                _context.Categories.Add(new Category { Name = "Computo y Tablets" });
+                _context.Categories.Add(new Category { Name = "Videojuegos" });
+                _context.Categories.Add(new Category { Name = "Hogar y Cocina" });
+                _context.Categories.Add(new Category { Name = "Herramientas y Hogar" });
+                _context.Categories.Add(new Category { Name = "Bebé" });
+                _context.Categories.Add(new Category { Name = "Relojes" });
+                _context.Categories.Add(new Category { Name = "Deportes" });
+                _context.Categories.Add(new Category { Name = "Tiendas de Adultos" });
+                _context.Categories.Add(new Category { Name = "Juguetes" });
+                _context.Categories.Add(new Category { Name = "Calzado" });
+                await _context.SaveChangesAsync();
+            }
+
         }
 
         private async Task CheckCountriesAsync()
