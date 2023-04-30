@@ -7,11 +7,11 @@ namespace Sales.API.Controllers
 {
     [ApiController]
     [Route("/api/categories")]
-    public class CategoiresController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public CategoiresController(DataContext context)
+        public CategoriesController(DataContext context)
         {
             _context = context;
         }
@@ -44,9 +44,10 @@ namespace Sales.API.Controllers
         [HttpPost]
         public async Task<ActionResult> PostAsync(Category category)
         {
-            _context.Add(category);
+            
             try
             {
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return Ok(category);
             }
@@ -56,10 +57,8 @@ namespace Sales.API.Controllers
                 {
                     return BadRequest("Ya existe una categoria con el mismo nombre.");
                 }
-                else
-                {
-                    return BadRequest(dbUpdateException.InnerException.Message);
-                }
+                 return BadRequest(dbUpdateException.InnerException.Message);
+                
             }
             catch (Exception exception)
             {
@@ -68,11 +67,12 @@ namespace Sales.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Category category)
+        public async Task<ActionResult> PutAsync(Category category)
         {
-            _context.Update(category);
+            
             try
             {
+                _context.Update(category);
                 await _context.SaveChangesAsync();
                 return Ok(category);
             }
@@ -82,10 +82,9 @@ namespace Sales.API.Controllers
                 {
                     return BadRequest("Ya existe una categoria con el mismo nombre.");
                 }
-                else
-                {
-                    return BadRequest(dbUpdateException.InnerException.Message);
-                }
+
+                return BadRequest(dbUpdateException.InnerException.Message);
+                
             }
             catch (Exception exception)
             {
