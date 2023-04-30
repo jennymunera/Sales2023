@@ -84,8 +84,15 @@
                 return;
             }
         }
-
         await LoadAsync();
+        var toast = sweetAlertService.Mixin(new SweetAlertOptions
+            {
+                Toast = true,
+                Position = SweetAlertPosition.BottomLeft,
+                ShowConfirmButton = false,
+                Timer = 3000
+            });
+        await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Categoría Eliminada Satisfactoriamente.");
     }
 }
 
