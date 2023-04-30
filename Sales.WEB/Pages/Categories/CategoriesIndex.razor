@@ -65,7 +65,7 @@
                 ConfirmButtonText = "Si"
             });
 
-        var confirm = !string.IsNullOrEmpty(result.Value);
+        var confirm = string.IsNullOrEmpty(result.Value);
 
         if (confirm)
         {
