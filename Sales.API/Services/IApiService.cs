@@ -1,6 +1,9 @@
-﻿namespace Sales.API.Services
+﻿using Sales.Shared.Responses;
+
+namespace Sales.API.Services
 {
-    public interface IApiSerive
+    public interface IApiService
     {
+        Task<Response> GetListAsync<T>(string servicePrefix, string controller);
     }
 }
